@@ -11,9 +11,14 @@ jobs:
       - uses: actions/checkout@v4
         with:
           submodules: 'true'
-      - name: Link
+      - name: Ensure output directory
+        run: mkdir -p output/x86_64
+      - name: Create Defconfig
+        run: configs/createDefconfig.sh configs/batocera-x86_64
+      - name: Config
         run: make O=$PWD/output/x86_64 BR2_EXTERNAL=$PWD -C $PWD/buildroot batocera-x86_64_defconfig
       - name: Compile
         run: |
           cd output/x86_64
           make
+          ls -lah
