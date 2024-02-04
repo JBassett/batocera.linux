@@ -8,8 +8,9 @@ jobs:
     container:
       image: batoceralinux/batocera.linux-build:latest
     steps:
-      - name: Submodules Setup
-        run: git submodule update --init --recursive
+      - uses: actions/checkout@v4
+        with:
+          submodules: 'true'
       - name: Link
         run: make O=$PWD/output/x86_64 BR2_EXTERNAL=$PWD -C $PWD/buildroot batocera-x86_64_defconfig
       - name: Compile
